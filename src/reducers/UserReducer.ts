@@ -1,13 +1,14 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {IUser, IUserActions} from '../interfaces/User';
+// TODO: types
 
-export const initialState: IUser = {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export const initialState = {
   token: '',
   user: {},
   property: {},
 };
 
-export const UserReducer = (state: IUser, action: IUserActions) => {
+export default (state: any = initialState, action: any = {}) => {
   switch (action.type) {
     case 'setToken':
       AsyncStorage.setItem('token', action.payload.token);

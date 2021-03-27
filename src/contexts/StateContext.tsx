@@ -1,25 +1,34 @@
-import React, {createContext, useReducer} from 'react';
+// TODO: types
 
-import {initialState, UserReducer} from '../reducers/UserReducer';
-import {IUser, IUserActions} from '../interfaces/User';
+import React, {createContext, useContext, useReducer} from 'react';
 
-interface UserContextData {
-  state: IUser;
-  dispatch: React.Dispatch<IUserActions>;
+import UserReducer from '../reducers/UserReducer';
+
+interface StateContextData {
+  state: any;
+  dispatch: React.Dispatch<any>;
 }
 
-export const UserContext = createContext<UserContextData>(
-  {} as UserContextData,
+const initialState = {
+  user: UserReducer(),
+};
+
+const MainReducer = (state: any, action: any) => ({
+  user: UserReducer(state.user, action),
+});
+
+export const StateContext = createContext<StateContextData>(
+  {} as StateContextData,
 );
 
-export const UserContextProvider: React.FC = ({children}) => {
-  const [state, dispatch] = useReducer(UserReducer, initialState);
+export const StateProvider: React.FC = ({children}) => {
+  const [state, dispatch] = useReducer(MainReducer, initialState);
 
   return (
-    <UserContext.Provider value={{state, dispatch}}>
+    <StateContext.Provider value={{state, dispatch}}>
       {children}
-    </UserContext.Provider>
+    </StateContext.Provider>
   );
 };
 
-export default UserContextProvider;
+export const useStateValue = () => useContext(StateContext);
