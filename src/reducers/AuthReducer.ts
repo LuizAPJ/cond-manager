@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {IAuthState, IAuthActions} from '../interfaces/Auth';
 
 export const initialState: IAuthState = {
-  token: 'não tem',
+  token: '',
   user: {},
   property: {},
 };
