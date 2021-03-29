@@ -1,22 +1,11 @@
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import {useColorScheme} from 'react-native';
 import {ThemeProvider} from 'styled-components';
-import styled from 'styled-components/native';
 
 import {StateProvider} from './contexts/StateContext';
-
+import AuthStack from './routes/AuthStack';
 import themes from './themes';
-
-const Container = styled.View`
-  background: ${props => props.theme.background};
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-const Title = styled.Text`
-  color: ${props => props.theme.text};
-  font-size: 44px;
-`;
 
 const App: React.FC = () => {
   const deviceTheme = useColorScheme();
@@ -24,11 +13,11 @@ const App: React.FC = () => {
 
   return (
     <StateProvider>
-      <ThemeProvider theme={theme}>
-        <Container>
-          <Title>Home</Title>
-        </Container>
-      </ThemeProvider>
+      <NavigationContainer>
+        <ThemeProvider theme={theme}>
+          <AuthStack />
+        </ThemeProvider>
+      </NavigationContainer>
     </StateProvider>
   );
 };
