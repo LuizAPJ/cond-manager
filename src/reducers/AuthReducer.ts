@@ -1,17 +1,22 @@
-// TODO: types
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const initialState = {
-  token: '',
+import {IAuthState, IAuthActions} from '../interfaces/Auth';
+
+export const initialState: IAuthState = {
+  token: 'não tem',
   user: {},
   property: {},
 };
 
-export default (state: any = initialState, action: any = {}) => {
+export const AuthReducer = (
+  state: IAuthState = initialState,
+  action: IAuthActions,
+) => {
   switch (action.type) {
     case 'setToken':
-      AsyncStorage.setItem('token', action.payload.token);
+      if (action.payload.token) {
+        AsyncStorage.setItem('token', action.payload.token);
+      }
       return {...state, token: action.payload.token};
 
     case 'setUser':
