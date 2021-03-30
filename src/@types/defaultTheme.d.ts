@@ -5,9 +5,10 @@ declare module 'styled-components' {
     text: string;
     lighterText: string;
     drawerText: string;
+    buttonText: string;
 
     background: string;
-    darkerBackground: string;
+    lighterBackground: string;
 
     border: string;
     lighterBorder: string;

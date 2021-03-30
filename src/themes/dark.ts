@@ -2,12 +2,13 @@ export default {
   text: '#F5F6FA',
   lighterText: '#FFF',
   drawerText: '#EFEFF1',
+  buttonText: '#FFF',
 
-  background: '#18181B',
-  darkerBackground: '#0E0E10',
+  background: '#2F2F31',
+  lighterBackground: '#464648',
 
-  border: '#CCC',
-  lighterBorder: '#E8E9ED',
+  border: '#26262C',
+  lighterBorder: '#36363B',
 
   purple: '#8863E6',
   red: '#FF0000',

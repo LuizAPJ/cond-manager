@@ -2,9 +2,10 @@ export default {
   text: '#000',
   lighterText: '#9C9DB9',
   drawerText: '#666E78',
+  buttonText: '#FFF',
 
-  background: '#FFF',
-  darkerBackground: '#F5F6FA',
+  background: '#F5F6FA',
+  lighterBackground: '#FFF',
 
   border: '#CCC',
   lighterBorder: '#E8E9ED',
