@@ -1,5 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useColorScheme} from 'react-native';
+
+import themes from '../themes';
 
 import PrealoadScreen from '../screens/PreloadScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -9,8 +12,18 @@ import RegisterScreen from '../screens/RegisterScreen';
 const Stack = createStackNavigator();
 
 const AuthStack: React.FC = () => {
+  const deviceTheme = useColorScheme();
+  const theme = deviceTheme ? themes[deviceTheme] : themes.dark;
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.background,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+      }}>
       <Stack.Screen
         name="PreloadScreen"
         component={PrealoadScreen}
@@ -32,7 +45,7 @@ const AuthStack: React.FC = () => {
       <Stack.Screen
         name="RegisterScreen"
         component={RegisterScreen}
-        options={{headerShown: false}}
+        options={{title: 'Fazer cadastro'}}
       />
     </Stack.Navigator>
   );
