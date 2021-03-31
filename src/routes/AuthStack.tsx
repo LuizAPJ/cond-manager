@@ -23,6 +23,7 @@ const AuthStack: React.FC = () => {
           elevation: 0,
           shadowOpacity: 0,
         },
+        headerTintColor: theme.text,
       }}>
       <Stack.Screen
         name="PreloadScreen"
