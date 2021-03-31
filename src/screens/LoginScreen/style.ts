@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 export default {
   Container: styled.SafeAreaView`
     flex: 1;
+    justify-content: center;
     padding: 20px;
     background-color: ${props => props.theme.background};
   `,
@@ -19,7 +20,7 @@ export default {
     border-radius: 5px;
     color: ${props => props.theme.text};
     font-size: 15px;
-    padding: 10px;
+    padding: 10px 15px;
     margin-bottom: 15px;
   `,
   Button: styled.TouchableOpacity`
