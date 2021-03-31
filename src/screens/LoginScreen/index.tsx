@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {useColorScheme} from 'react-native';
+import React, {useCallback, useContext, useState} from 'react';
+import {Alert, useColorScheme} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {AuthContext} from '../../contexts/auth';
@@ -13,10 +13,34 @@ const LoginScreen: React.FC = () => {
   const theme = deviceTheme ? themes[deviceTheme] : themes.dark;
 
   const navigation = useNavigation();
-  const {state: context, dispatch} = useContext(AuthContext);
+  const {dispatch} = useContext(AuthContext);
 
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleLoginButton = useCallback(async () => {
+    if (cpf && password) {
+      const {data: response} = await api.post('/auth/login', {cpf, password});
+
+      if (!response.error) {
+        dispatch({type: 'setToken', payload: {token: response.token}});
+        dispatch({type: 'setUser', payload: {user: response.user}});
+
+        navigation.reset({
+          index: 1,
+          routes: [{name: 'ChoosePropertyScreen'}],
+        });
+      } else {
+        Alert.alert('Erro!', `${response.error}`);
+      }
+    } else {
+      Alert.alert('Erro!', 'Preencha todos os campos.');
+    }
+  }, [cpf, dispatch, navigation, password]);
+
+  const handleRegisterLogin = useCallback(() => {
+    navigation.navigate('RegisterScreen');
+  }, [navigation]);
 
   return (
     <S.Container>
@@ -41,11 +65,11 @@ const LoginScreen: React.FC = () => {
         placeholderTextColor={theme.text}
       />
 
-      <S.Button onPress={() => {}}>
+      <S.Button onPress={handleLoginButton}>
         <S.ButtonText>ENTRAR</S.ButtonText>
       </S.Button>
 
-      <S.Button onPress={() => {}}>
+      <S.Button onPress={handleRegisterLogin}>
         <S.ButtonText>CADASTRAR-SE</S.ButtonText>
       </S.Button>
     </S.Container>
