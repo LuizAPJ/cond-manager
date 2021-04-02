@@ -4,8 +4,8 @@ import {IAuthState, IAuthActions} from '../interfaces/Auth';
 
 export const initialState: IAuthState = {
   token: '',
-  user: {},
-  property: {},
+  user: null,
+  property: null,
 };
 
 export const AuthReducer = (

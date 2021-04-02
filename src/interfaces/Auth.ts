@@ -3,8 +3,8 @@ import IProperty from './Property';
 
 export interface IAuthState {
   token?: string;
-  user?: IUser | {};
-  property?: IProperty | {};
+  user?: IUser | null;
+  property?: IProperty | null;
 }
 
 export interface IAuthActions {
