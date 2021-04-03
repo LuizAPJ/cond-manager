@@ -1,7 +1,7 @@
 export default {
   text: '#F5F6FA',
   lighterText: '#FFF',
-  drawerText: '#EFEFF1',
+  drawerText: '#BBBBC4',
   buttonText: '#FFF',
 
   background: '#2F2F31',

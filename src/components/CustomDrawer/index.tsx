@@ -1,6 +1,7 @@
-import React, {useContext} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {useColorScheme} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import themes from '../../themes';
@@ -15,6 +16,15 @@ const CustomDrawer: React.FC = props => {
   const navigation = useNavigation();
   const {state: context, dispatch} = useContext(AuthContext);
 
+  const handleChangeProperty = useCallback(async () => {
+    await AsyncStorage.removeItem('property');
+
+    navigation.reset({
+      index: 1,
+      routes: [{name: 'ChoosePropertyScreen'}],
+    });
+  }, [navigation]);
+
   return (
     <S.Container>
       <S.LogoContainer>
@@ -26,17 +36,24 @@ const CustomDrawer: React.FC = props => {
 
       <S.Scroller />
 
-      <S.ChangeUnitContainer>
-        <S.ChangeUnitBtn>
-          <S.ChangeUnitBtnText>Trocar Propriedade</S.ChangeUnitBtnText>
-        </S.ChangeUnitBtn>
-      </S.ChangeUnitContainer>
+      <S.ChangePropertyContainer>
+        <S.ChangePropertyBtn onPress={handleChangeProperty}>
+          <S.ChangePropertyBtnText>Trocar Propriedade</S.ChangePropertyBtnText>
+        </S.ChangePropertyBtn>
+      </S.ChangePropertyContainer>
 
       <S.FooterContainer>
         <S.FooterInfo>
-          <S.FooterProfile>dgsagdusya</S.FooterProfile>
-          <S.FooterUnitText>dhsaiduh</S.FooterUnitText>
+          <S.FooterProfile>
+            Olá {context.user?.name ? context.user.name : 'inquilino'}
+          </S.FooterProfile>
+          <S.FooterPropertyText>{context.property?.name}</S.FooterPropertyText>
         </S.FooterInfo>
+
+        <S.FooterPropertyButton
+          onPress={() => navigation.navigate('PropertyScreen')}>
+          <Icon name="gear" size={24} color={theme.drawerText} />
+        </S.FooterPropertyButton>
       </S.FooterContainer>
     </S.Container>
   );
