@@ -18,6 +18,25 @@ export default {
     flex: 1;
     margin: 20px 0;
   `,
+  MenuButton: styled.TouchableOpacity`
+    flex-direction: row;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    align-items: center;
+  `,
+  MenuSquare: styled.View`
+    width: 5px;
+    height: 35px;
+    margin-right: 20px;
+    background-color: transparent;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  `,
+  MenuButtonText: styled.Text`
+    font-size: 15px;
+    margin-left: 10px;
+    color: ${props => props.theme.drawerText};
+  `,
   ChangePropertyContainer: styled.View`
     margin: 10px;
   `,
