@@ -8,6 +8,7 @@ import PrealoadScreen from '../screens/PreloadScreen';
 import LoginScreen from '../screens/LoginScreen';
 import ChoosePropertyScreen from '../screens/ChoosePropertyScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import MainDrawer from './MainDrawer';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,12 @@ const AuthStack: React.FC = () => {
         name="RegisterScreen"
         component={RegisterScreen}
         options={{title: 'Fazer cadastro'}}
+      />
+
+      <Stack.Screen
+        name="MainDrawer"
+        component={MainDrawer}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
