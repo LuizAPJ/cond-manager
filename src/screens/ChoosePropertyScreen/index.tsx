@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../services/api';
 import {AuthContext} from '../../contexts/auth';
 import themes from '../../themes';
+import IProperty from '../../interfaces/Property';
 
 import S from './style';
 
@@ -29,16 +30,32 @@ const ChoosePropertyScreen: React.FC = () => {
     });
   }, [navigation]);
 
+  const handleChoosePropertybtn = useCallback(
+    async (property: IProperty) => {
+      await AsyncStorage.setItem('property', JSON.stringify(property));
+
+      dispatch({type: 'setProperty', payload: {property}});
+
+      navigation.reset({
+        index: 1,
+        routes: [{name: 'MainDrawer'}],
+      });
+    },
+    [dispatch, navigation],
+  );
+
   useEffect(() => {
     (async () => {
-      let property = await AsyncStorage.getItem('property');
+      const property = await AsyncStorage.getItem('property');
+
       if (property) {
-        property = JSON.parse(property);
-        // TODO: choose property
+        const parsedProperty: IProperty = JSON.parse(property);
+        await handleChoosePropertybtn(parsedProperty);
       }
+
       setLoading(false);
     })();
-  }, []);
+  }, [handleChoosePropertybtn]);
 
   return (
     <S.Container>
@@ -52,7 +69,9 @@ const ChoosePropertyScreen: React.FC = () => {
 
             <S.PropertyList>
               {context.user.properties.map((item, index) => (
-                <S.ChoosePropertyBtn key={index} onPress={() => {}}>
+                <S.ChoosePropertyBtn
+                  key={index}
+                  onPress={() => handleChoosePropertybtn(item)}>
                   <S.ChoosePropertyBtnText>{item.name}</S.ChoosePropertyBtnText>
                 </S.ChoosePropertyBtn>
               ))}
