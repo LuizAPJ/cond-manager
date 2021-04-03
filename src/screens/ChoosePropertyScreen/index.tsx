@@ -1,7 +1,9 @@
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useColorScheme} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import api from '../../services/api';
 import {AuthContext} from '../../contexts/auth';
 import themes from '../../themes';
 
@@ -16,7 +18,27 @@ const ChoosePropertyScreen: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const handleLogoutButton = useCallback(async () => {}, []);
+  const handleLogoutButton = useCallback(async () => {
+    await api.post('/auth/logout');
+    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('property');
+
+    navigation.reset({
+      index: 1,
+      routes: [{name: 'LoginScreen'}],
+    });
+  }, [navigation]);
+
+  useEffect(() => {
+    (async () => {
+      let property = await AsyncStorage.getItem('property');
+      if (property) {
+        property = JSON.parse(property);
+        // TODO: choose property
+      }
+      setLoading(false);
+    })();
+  }, []);
 
   return (
     <S.Container>
@@ -27,6 +49,14 @@ const ChoosePropertyScreen: React.FC = () => {
           <>
             <S.HeadTitle>Olá {context.user.name}!</S.HeadTitle>
             <S.HeadTitle>Escolha uma das suas propriedades.</S.HeadTitle>
+
+            <S.PropertyList>
+              {context.user.properties.map((item, index) => (
+                <S.ChoosePropertyBtn key={index} onPress={() => {}}>
+                  <S.ChoosePropertyBtnText>{item.name}</S.ChoosePropertyBtnText>
+                </S.ChoosePropertyBtn>
+              ))}
+            </S.PropertyList>
           </>
         )}
 
