@@ -6,6 +6,7 @@ import themes from '../themes';
 import CustomDrawer from '../components/CustomDrawer';
 
 import WallScreen from '../screens/WallScreen';
+import DocumentScreen from '../screens/DocumentScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -29,6 +30,12 @@ const MainDrawer: React.FC = () => {
         name="WallScreen"
         component={WallScreen}
         options={{title: 'Mural de Avisos'}}
+      />
+
+      <Drawer.Screen
+        name="DocumentScreen"
+        component={DocumentScreen}
+        options={{title: 'Documentos do Condomínio'}}
       />
     </Drawer.Navigator>
   );
