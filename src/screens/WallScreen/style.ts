@@ -5,9 +5,16 @@ export default {
     flex: 1;
     background-color: ${props => props.theme.background};
   `,
-  Scroller: styled.ScrollView`
-    flex: 1;
-    padding: 20px;
-  `,
   LoadingIcon: styled.ActivityIndicator``,
+  NoListContainer: styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+  `,
+  NoListText: styled.Text`
+    font-size: 15px;
+    font-weight: bold;
+    color: ${props => props.theme.text};
+  `,
 };

@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {useColorScheme} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {Alert, useColorScheme} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import api from '../../services/api';
@@ -7,6 +7,15 @@ import {AuthContext} from '../../contexts/auth';
 import themes from '../../themes';
 
 import S from './style';
+
+interface WallItemData {
+  id: number;
+  title: string;
+  body: string;
+  datecreated: string;
+  likes: number;
+  liked: boolean;
+}
 
 const ChoosePropertyScreen: React.FC = () => {
   const deviceTheme = useColorScheme();
@@ -16,12 +25,31 @@ const ChoosePropertyScreen: React.FC = () => {
   const {state: context, dispatch} = useContext(AuthContext);
 
   const [loading, setLoading] = useState(true);
+  const [wallList, setWallList] = useState<WallItemData[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const {data: response} = await api.get('/walls');
+      setLoading(false);
+
+      if (!response.error) {
+        // setWallList(response.list);
+      } else {
+        Alert.alert('Erro!', `${response.error}`);
+      }
+    })();
+  }, []);
 
   return (
     <S.Container>
-      <S.Scroller>
-        {loading && <S.LoadingIcon color={theme.purple} size="large" />}
-      </S.Scroller>
+      {loading && <S.LoadingIcon color={theme.purple} size="large" />}
+
+      {!loading && wallList.length === 0 && (
+        <S.NoListContainer>
+          <S.NoListText>Não há avisos no momento.</S.NoListText>
+        </S.NoListContainer>
+      )}
     </S.Container>
   );
 };
