@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {ElementType, useCallback, useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 
 import api from '../../services/api';
@@ -35,15 +35,13 @@ const ChoosePropertyScreen: React.FC = () => {
         </S.NoListContainer>
       )}
 
-      {wallList.length > 0 && (
-        <S.List
-          data={wallList}
-          onRefresh={getWall}
-          refreshing={loading}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => <WallItem data={item} />}
-        />
-      )}
+      <S.List<ElementType>
+        data={wallList}
+        onRefresh={getWall}
+        refreshing={loading}
+        keyExtractor={(item: IWallItem) => item.id.toString()}
+        renderItem={({item}: {item: IWallItem}) => <WallItem data={item} />}
+      />
     </S.Container>
   );
 };
