@@ -6,7 +6,6 @@ export default {
     background-color: ${props => props.theme.background};
     padding: 20px;
   `,
-  LoadingIcon: styled.ActivityIndicator``,
   NoListContainer: styled.View`
     flex: 1;
     justify-content: center;
