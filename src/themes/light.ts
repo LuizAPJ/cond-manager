@@ -1,6 +1,6 @@
 export default {
   text: '#000',
-  lighterText: '#9C9DB9',
+  grayText: '#9C9DB9',
   drawerText: '#666E78',
   buttonText: '#FFF',
 

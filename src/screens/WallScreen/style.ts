@@ -4,6 +4,7 @@ export default {
   Container: styled.SafeAreaView`
     flex: 1;
     background-color: ${props => props.theme.background};
+    padding: 20px;
   `,
   LoadingIcon: styled.ActivityIndicator``,
   NoListContainer: styled.View`
@@ -16,5 +17,8 @@ export default {
     font-size: 15px;
     font-weight: bold;
     color: ${props => props.theme.text};
+  `,
+  List: styled.FlatList`
+    flex: 1;
   `,
 };

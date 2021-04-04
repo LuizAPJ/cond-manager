@@ -3,7 +3,7 @@ import 'styled-components';
 declare module 'styled-components' {
   export interface DefaultTheme {
     text: string;
-    lighterText: string;
+    grayText: string;
     drawerText: string;
     buttonText: string;
 

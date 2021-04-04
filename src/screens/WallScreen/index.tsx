@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import api from '../../services/api';
 import {AuthContext} from '../../contexts/auth';
 import themes from '../../themes';
+import WallItem from '../../components/WallItem';
 
 import S from './style';
 
@@ -34,7 +35,7 @@ const ChoosePropertyScreen: React.FC = () => {
       setLoading(false);
 
       if (!response.error) {
-        // setWallList(response.list);
+        setWallList(response.list);
       } else {
         Alert.alert('Erro!', `${response.error}`);
       }
@@ -49,6 +50,14 @@ const ChoosePropertyScreen: React.FC = () => {
         <S.NoListContainer>
           <S.NoListText>Não há avisos no momento.</S.NoListText>
         </S.NoListContainer>
+      )}
+
+      {wallList.length > 0 && (
+        <S.List
+          data={wallList}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => <WallItem data={item} />}
+        />
       )}
     </S.Container>
   );
