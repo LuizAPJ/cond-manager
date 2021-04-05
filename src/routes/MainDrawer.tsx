@@ -8,6 +8,7 @@ import CustomDrawer from '../components/CustomDrawer';
 import WallScreen from '../screens/WallScreen';
 import DocumentScreen from '../screens/DocumentScreen';
 import BilletScreen from '../screens/BilletScreen';
+import WarningScreen from '../screens/WarningScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -43,6 +44,12 @@ const MainDrawer: React.FC = () => {
         name="BilletScreen"
         component={BilletScreen}
         options={{title: 'Boletos'}}
+      />
+
+      <Drawer.Screen
+        name="WarningScreen"
+        component={WarningScreen}
+        options={{title: 'Livro de Ocorrências'}}
       />
     </Drawer.Navigator>
   );
