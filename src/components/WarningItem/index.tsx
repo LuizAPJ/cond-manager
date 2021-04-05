@@ -45,7 +45,11 @@ const WarningItem: React.FC<WarningItemProps> = ({data}) => {
         </S.PhotosContainer>
       )}
 
-      <Modal animationType="slide" transparent={true} visible={showModal}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}>
         <S.ModalContainer>
           <S.ModalCloseButton onPress={() => setShowModal(false)}>
             <Icon name="close" size={24} color={theme.ice} />
