@@ -40,4 +40,15 @@ export default {
     height: 50px;
     border-radius: 10px;
   `,
+  ModalContainer: styled.View`
+    flex: 1;
+    background-color: ${props => props.theme.black};
+  `,
+  ModalImage: styled.Image`
+    flex: 1;
+  `,
+  ModalCloseButton: styled.TouchableOpacity`
+    align-self: flex-end;
+    margin: 10px;
+  `,
 };

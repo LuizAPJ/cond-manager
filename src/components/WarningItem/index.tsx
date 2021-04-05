@@ -1,5 +1,5 @@
-import React from 'react';
-import {useColorScheme} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {useColorScheme, Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import themes from '../../themes';
@@ -14,6 +14,14 @@ interface WarningItemProps {
 const WarningItem: React.FC<WarningItemProps> = ({data}) => {
   const deviceTheme = useColorScheme();
   const theme = deviceTheme ? themes[deviceTheme] : themes.dark;
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalImage, setModalImage] = useState('');
+
+  const openModal = useCallback(img => {
+    setModalImage(img);
+    setShowModal(true);
+  }, []);
 
   return (
     <S.Container>
@@ -30,12 +38,22 @@ const WarningItem: React.FC<WarningItemProps> = ({data}) => {
       {data.photos.length > 0 && (
         <S.PhotosContainer>
           {data.photos.map((item, index) => (
-            <S.PhotoButton key={index} onPress={() => {}}>
+            <S.PhotoButton key={index} onPress={() => openModal(item)}>
               <S.PhotoImage source={{uri: item}} resizeMode="cover" />
             </S.PhotoButton>
           ))}
         </S.PhotosContainer>
       )}
+
+      <Modal animationType="slide" transparent={true} visible={showModal}>
+        <S.ModalContainer>
+          <S.ModalCloseButton onPress={() => setShowModal(false)}>
+            <Icon name="close" size={24} color={theme.ice} />
+          </S.ModalCloseButton>
+
+          <S.ModalImage source={{uri: modalImage}} resizeMode="contain" />
+        </S.ModalContainer>
+      </Modal>
     </S.Container>
   );
 };

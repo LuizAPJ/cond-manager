@@ -13,4 +13,5 @@ export default {
   purple: '#8863E6',
   red: '#FF0000',
   ice: '#EEE',
+  black: '#000',
 };
