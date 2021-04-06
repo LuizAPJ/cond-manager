@@ -2,15 +2,20 @@ import React, {useCallback, useState} from 'react';
 import {Alert, useColorScheme} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {launchCamera} from 'react-native-image-picker';
+import {useNavigation} from '@react-navigation/native';
 
 import api from '../../services/api';
 import themes from '../../themes';
+import IProperty from '../../interfaces/Property';
 
 import S from './style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WarningAddScreen: React.FC = () => {
   const deviceTheme = useColorScheme();
   const theme = deviceTheme ? themes[deviceTheme] : themes.dark;
+
+  const navigation = useNavigation();
 
   const [warnText, setWarnText] = useState('');
   const [photoList, setPhotoList] = useState<string[]>([]);
@@ -63,6 +68,28 @@ const WarningAddScreen: React.FC = () => {
     [photoList],
   );
 
+  const handleSaveWarn = useCallback(async () => {
+    const property = await AsyncStorage.getItem('property');
+    if (property) {
+      const parsedProperty: IProperty = JSON.parse(property);
+      if (warnText) {
+        const {data: response} = await api.post('/warning', {
+          title: warnText,
+          list: photoList,
+          property: parsedProperty.id,
+        });
+
+        if (!response.error) {
+          navigation.navigate('WarningScreen');
+        } else {
+          Alert.alert('Erro!', `${response.error}`);
+        }
+      } else {
+        Alert.alert('Erro!', 'Descreva a ocorrência!');
+      }
+    }
+  }, [navigation, photoList, warnText]);
+
   return (
     <S.Container>
       <S.Scroller>
@@ -93,7 +120,7 @@ const WarningAddScreen: React.FC = () => {
 
         {loading && <S.LoadingText>Enviado foto. Aguarde!</S.LoadingText>}
 
-        <S.Button onPress={() => {}}>
+        <S.Button onPress={handleSaveWarn}>
           <S.ButtonText>SALVAR</S.ButtonText>
         </S.Button>
       </S.Scroller>
