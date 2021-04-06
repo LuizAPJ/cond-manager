@@ -54,6 +54,15 @@ const WarningAddScreen: React.FC = () => {
     );
   }, [photoList]);
 
+  const handleDeletePhoto = useCallback(
+    url => {
+      let list = [...photoList];
+      list = list.filter(value => value !== url);
+      setPhotoList(list);
+    },
+    [photoList],
+  );
+
   return (
     <S.Container>
       <S.Scroller>
@@ -74,7 +83,7 @@ const WarningAddScreen: React.FC = () => {
             {photoList.map((item, index) => (
               <S.PhotoItem key={index}>
                 <S.Photo source={{uri: item}} />
-                <S.PhotoRemoveButtom onPress={() => {}}>
+                <S.PhotoRemoveButtom onPress={() => handleDeletePhoto(item)}>
                   <Icon name="remove" size={16} color={theme.red} />
                 </S.PhotoRemoveButtom>
               </S.PhotoItem>
