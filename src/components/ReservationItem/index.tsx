@@ -16,7 +16,12 @@ const ReservationItem: React.FC<ReservationItemProps> = ({data}) => {
 
   return (
     <S.Container>
-      <S.Title>ReservationItem</S.Title>
+      <S.CoverImage source={{uri: data.cover}} resizeMode="cover" />
+      <S.Title>{data.title}</S.Title>
+      <S.DateText>Horários de funcionamento</S.DateText>
+      {data.dates.map((item, index) => (
+        <S.DateItem key={index}>{item}</S.DateItem>
+      ))}
     </S.Container>
   );
 };

@@ -5,7 +5,11 @@ export default {
     flex: 1;
     background-color: ${props => props.theme.background};
   `,
-  Scroller: styled.ScrollView`
+  Scroller: styled.ScrollView.attrs({
+    contentContainerStyle: {
+      paddingBottom: 40,
+    },
+  })`
     flex: 1px;
     padding: 20px;
   `,

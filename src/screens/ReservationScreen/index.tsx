@@ -33,7 +33,7 @@ const ReservationScreen: React.FC = () => {
 
   return (
     <S.Container>
-      <S.Scroller>
+      <S.Scroller showsVerticalScrollIndicator={false}>
         <S.Button>
           <S.ButtonText>Minhas Reservas</S.ButtonText>
         </S.Button>
