@@ -10,6 +10,7 @@ import DocumentScreen from '../screens/DocumentScreen';
 import BilletScreen from '../screens/BilletScreen';
 import WarningScreen from '../screens/WarningScreen';
 import WarningAddScreen from '../screens/WarningAddScreen';
+import ReservationScreen from '../screens/ReservationScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -57,6 +58,12 @@ const MainDrawer: React.FC = () => {
         name="WarningAddScreen"
         component={WarningAddScreen}
         options={{title: 'Adicionar uma Ocorrência'}}
+      />
+
+      <Drawer.Screen
+        name="ReservationScreen"
+        component={ReservationScreen}
+        options={{title: 'Reservas Disponíveis'}}
       />
     </Drawer.Navigator>
   );
