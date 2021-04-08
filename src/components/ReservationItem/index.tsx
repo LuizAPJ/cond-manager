@@ -1,7 +1,6 @@
-import React from 'react';
-import {useColorScheme} from 'react-native';
+import React, {useCallback} from 'react';
+import {useNavigation} from '@react-navigation/native';
 
-import themes from '../../themes';
 import IReservationItem from '../../interfaces/ReservationItem';
 
 import S from './style';
@@ -11,11 +10,19 @@ interface ReservationItemProps {
 }
 
 const ReservationItem: React.FC<ReservationItemProps> = ({data}) => {
-  const deviceTheme = useColorScheme();
-  const theme = deviceTheme ? themes[deviceTheme] : themes.dark;
+  const navigation = useNavigation();
+
+  const handleClick = useCallback(() => {
+    navigation.navigate('ReservationAddScreen', {
+      id: data.id,
+      cover: data.cover,
+      title: data.title,
+      dates: data.dates,
+    });
+  }, [data, navigation]);
 
   return (
-    <S.Container>
+    <S.Container onPress={handleClick}>
       <S.CoverImage source={{uri: data.cover}} resizeMode="cover" />
       <S.Title>{data.title}</S.Title>
       <S.DateText>Horários de funcionamento</S.DateText>
