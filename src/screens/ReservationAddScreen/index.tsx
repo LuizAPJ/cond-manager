@@ -13,6 +13,11 @@ type ParamList = {
   Reservation: IReservation;
 };
 
+interface ReservationTime {
+  id: string;
+  title: string;
+}
+
 const ReservationAddScreen: React.FC = () => {
   const deviceTheme = useColorScheme();
   const theme = deviceTheme ? themes[deviceTheme] : themes.dark;
@@ -22,15 +27,24 @@ const ReservationAddScreen: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
   const [disabledDates, setDisabledDates] = useState<Date[]>([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [timeList, setTimeList] = useState([]);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [timeList, setTimeList] = useState<ReservationTime[]>([]);
   const [selectedTime, setSelectedTime] = useState(null);
 
   const minDate = new Date();
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + 3);
 
-  const handleDateChange = useCallback(() => {}, []);
+  const handleDateChange = useCallback(date => {
+    let dateElement = new Date(date);
+    let year = dateElement.getFullYear();
+    let month: string | number = dateElement.getMonth() + 1;
+    let day: string | number = dateElement.getDate();
+
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+    setSelectedDate(`${year}-${month}-${day}`);
+  }, []);
 
   const getDisabledDates = useCallback(async () => {
     setDisabledDates([]);
@@ -59,6 +73,33 @@ const ReservationAddScreen: React.FC = () => {
     }
   }, [route]);
 
+  const showTextDate = useCallback(date => {
+    let dateElement = new Date(date);
+    let year = dateElement.getFullYear();
+    let month: string | number = dateElement.getMonth() + 1;
+    let day: string | number = dateElement.getDate();
+
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+
+    return `${day}/${month}/${year}`;
+  }, []);
+
+  const getTimes = useCallback(async () => {
+    if (selectedDate) {
+      const {data: response} = await api.get(
+        `/reservation/${route.params.id}/times?date=${selectedDate}`,
+      );
+
+      if (!response.error) {
+        setSelectedTime(null);
+        setTimeList(response.list);
+      } else {
+        Alert.alert('Erro!', `${response.error}`);
+      }
+    }
+  }, [route, selectedDate]);
+
   useEffect(() => {
     if (route.params) {
       navigation.setOptions({
@@ -67,6 +108,10 @@ const ReservationAddScreen: React.FC = () => {
     }
     getDisabledDates();
   }, [getDisabledDates, navigation, route]);
+
+  useEffect(() => {
+    getTimes();
+  }, [getTimes, selectedDate]);
 
   return (
     <S.Container>
@@ -107,6 +152,14 @@ const ReservationAddScreen: React.FC = () => {
               todayTextStyle={{color: theme.buttonText}}
             />
           </S.CalendarContainer>
+        )}
+
+        {!loading && selectedDate && (
+          <>
+            <S.Title>
+              Horários disponíveis em {showTextDate(selectedDate)}
+            </S.Title>
+          </>
         )}
       </S.Scroller>
     </S.Container>

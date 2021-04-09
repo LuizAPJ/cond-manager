@@ -21,4 +21,6 @@ export default {
   CalendarContainer: styled.View`
     margin: 20px;
   `,
+  Title: styled.Text``,
+  TimeList: styled.View``,
 };
