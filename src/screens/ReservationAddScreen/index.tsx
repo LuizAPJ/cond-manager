@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useColorScheme} from 'react-native';
 
@@ -18,6 +18,8 @@ const ReservationAddScreen: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<ParamList, 'Reservation'>>();
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (route.params) {
       navigation.setOptions({
@@ -28,7 +30,11 @@ const ReservationAddScreen: React.FC = () => {
 
   return (
     <S.Container>
-      <S.Title>ReservationAddScreen</S.Title>
+      <S.Scroller>
+        <S.CoverImage source={{uri: route.params.cover}} resizeMode="cover" />
+
+        {loading && <S.LoadingIcon size="large" color={theme.purple} />}
+      </S.Scroller>
     </S.Container>
   );
 };
