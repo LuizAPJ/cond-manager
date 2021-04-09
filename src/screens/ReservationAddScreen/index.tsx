@@ -1,4 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {ScrollView} from 'react-native';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {Alert, useColorScheme} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -22,6 +23,7 @@ const ReservationAddScreen: React.FC = () => {
   const deviceTheme = useColorScheme();
   const theme = deviceTheme ? themes[deviceTheme] : themes.dark;
 
+  const scroll = useRef<ScrollView>(null);
   const navigation = useNavigation();
   const route = useRoute<RouteProp<ParamList, 'Reservation'>>();
 
@@ -29,7 +31,7 @@ const ReservationAddScreen: React.FC = () => {
   const [disabledDates, setDisabledDates] = useState<Date[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [timeList, setTimeList] = useState<ReservationTime[]>([]);
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   const minDate = new Date();
   const maxDate = new Date();
@@ -94,6 +96,12 @@ const ReservationAddScreen: React.FC = () => {
       if (!response.error) {
         setSelectedTime(null);
         setTimeList(response.list);
+
+        setTimeout(() => {
+          if (scroll.current) {
+            scroll.current.scrollToEnd();
+          }
+        }, 300);
       } else {
         Alert.alert('Erro!', `${response.error}`);
       }
@@ -115,7 +123,7 @@ const ReservationAddScreen: React.FC = () => {
 
   return (
     <S.Container>
-      <S.Scroller>
+      <S.Scroller ref={scroll}>
         <S.CoverImage source={{uri: route.params.cover}} resizeMode="cover" />
 
         {loading && <S.LoadingIcon size="large" color={theme.purple} />}
@@ -159,6 +167,23 @@ const ReservationAddScreen: React.FC = () => {
             <S.Title>
               Horários disponíveis em {showTextDate(selectedDate)}
             </S.Title>
+
+            {timeList.length === 0 && (
+              <S.NoSchedules>Sem horários disponíveis!</S.NoSchedules>
+            )}
+
+            <S.TimeList>
+              {timeList.map((item, index) => (
+                <S.TimeItem
+                  key={index}
+                  onPress={() => setSelectedTime(item.id)}
+                  active={selectedTime === item.id}>
+                  <S.TimeItemText active={selectedTime === item.id}>
+                    {item.title}
+                  </S.TimeItemText>
+                </S.TimeItem>
+              ))}
+            </S.TimeList>
           </>
         )}
       </S.Scroller>
