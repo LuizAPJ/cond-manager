@@ -13,6 +13,8 @@ declare module 'styled-components' {
     border: string;
     lighterBorder: string;
 
+    disabledDatesText: string;
+
     purple: string;
     red: string;
     ice: string;

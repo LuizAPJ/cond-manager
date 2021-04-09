@@ -10,6 +10,8 @@ export default {
   border: '#CCC',
   lighterBorder: '#E8E9ED',
 
+  disabledDatesText: '#9C9DB9',
+
   purple: '#8863E6',
   red: '#FF0000',
   ice: '#EEE',
