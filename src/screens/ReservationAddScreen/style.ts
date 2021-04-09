@@ -18,4 +18,5 @@ export default {
   LoadingIcon: styled.ActivityIndicator`
     margin-top: 20px;
   `,
+  CalendarContainer: styled.View``,
 };
