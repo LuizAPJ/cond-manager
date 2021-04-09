@@ -56,4 +56,15 @@ export default {
     color: ${props =>
       props.active ? props.theme.buttonText : props.theme.text};
   `,
+  SaveButton: styled.TouchableOpacity`
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.theme.purple};
+    padding: 15px;
+  `,
+  SaveButtonText: styled.Text`
+    font-size: 15px;
+    font-weight: bold;
+    color: ${props => props.theme.buttonText};
+  `,
 };

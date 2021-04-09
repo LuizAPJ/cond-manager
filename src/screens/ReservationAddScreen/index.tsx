@@ -3,12 +3,14 @@ import {ScrollView} from 'react-native';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {Alert, useColorScheme} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import themes from '../../themes';
 import IReservation from '../../interfaces/ReservationItem';
 
 import S from './style';
 import api from '../../services/api';
+import IProperty from '../../interfaces/Property';
 
 type ParamList = {
   Reservation: IReservation;
@@ -108,6 +110,32 @@ const ReservationAddScreen: React.FC = () => {
     }
   }, [route, selectedDate]);
 
+  const handleSave = useCallback(async () => {
+    if (selectedDate && selectedTime) {
+      const property = await AsyncStorage.getItem('property');
+      if (property) {
+        const parsedProperty: IProperty = JSON.parse(property);
+
+        const {data: response} = await api.post(
+          `/reservation/${route.params.id}`,
+          {
+            property: parsedProperty.id,
+            date: selectedDate,
+            time: selectedTime,
+          },
+        );
+
+        if (!response.error) {
+          navigation.navigate('ReservationMyScreen');
+        } else {
+          Alert.alert('Erro!', `${response.error}`);
+        }
+      }
+    } else {
+      Alert.alert('Erro!', 'Selecione uma data e um horário!');
+    }
+  }, [navigation, route.params.id, selectedDate, selectedTime]);
+
   useEffect(() => {
     if (route.params) {
       navigation.setOptions({
@@ -187,6 +215,12 @@ const ReservationAddScreen: React.FC = () => {
           </>
         )}
       </S.Scroller>
+
+      {!loading && (
+        <S.SaveButton onPress={handleSave}>
+          <S.SaveButtonText>Reservar Local</S.SaveButtonText>
+        </S.SaveButton>
+      )}
     </S.Container>
   );
 };
