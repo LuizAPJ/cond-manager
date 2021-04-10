@@ -53,21 +53,21 @@ const RegisterScreen: React.FC = () => {
         placeholder="Digite seu Nome Completo"
         value={name}
         onChangeText={text => setName(text)}
-        placeholderTextColor={theme.text}
+        placeholderTextColor={theme.grayText}
       />
 
       <S.Field
         placeholder="Digite seu E-mail"
         value={email}
         onChangeText={text => setEmail(text)}
-        placeholderTextColor={theme.text}
+        placeholderTextColor={theme.grayText}
       />
 
       <S.Field
         placeholder="Digite seu CPF"
         value={cpf}
         onChangeText={text => setCpf(text)}
-        placeholderTextColor={theme.text}
+        placeholderTextColor={theme.grayText}
         keyboardType="numeric"
       />
 
@@ -75,7 +75,7 @@ const RegisterScreen: React.FC = () => {
         placeholder="Digite sua Senha"
         value={password}
         onChangeText={text => setPassword(text)}
-        placeholderTextColor={theme.text}
+        placeholderTextColor={theme.grayText}
         secureTextEntry
       />
 
@@ -83,7 +83,7 @@ const RegisterScreen: React.FC = () => {
         placeholder="Confirme sua Senha"
         value={passwordConfirm}
         onChangeText={text => setPasswordConfirm(text)}
-        placeholderTextColor={theme.text}
+        placeholderTextColor={theme.grayText}
         secureTextEntry
       />
 

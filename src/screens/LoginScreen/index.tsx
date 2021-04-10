@@ -54,7 +54,7 @@ const LoginScreen: React.FC = () => {
         value={cpf}
         onChangeText={text => setCpf(text)}
         keyboardType="numeric"
-        placeholderTextColor={theme.text}
+        placeholderTextColor={theme.grayText}
       />
 
       <S.Field
@@ -62,7 +62,7 @@ const LoginScreen: React.FC = () => {
         value={password}
         onChangeText={text => setPassword(text)}
         secureTextEntry
-        placeholderTextColor={theme.text}
+        placeholderTextColor={theme.grayText}
       />
 
       <S.Button onPress={handleLoginButton}>
