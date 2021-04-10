@@ -13,6 +13,7 @@ import WarningAddScreen from '../screens/WarningAddScreen';
 import ReservationScreen from '../screens/ReservationScreen';
 import ReservationAddScreen from '../screens/ReservationAddScreen';
 import MyReservationsScreen from '../screens/MyReservationsScreen';
+import FoundAndLostScreen from '../screens/FoundAndLostScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -78,6 +79,12 @@ const MainDrawer: React.FC = () => {
         name="MyReservationsScreen"
         component={MyReservationsScreen}
         options={{title: 'Minhas Reservas'}}
+      />
+
+      <Drawer.Screen
+        name="FoundAndLostScreen"
+        component={FoundAndLostScreen}
+        options={{title: 'Achados e Perdidos'}}
       />
     </Drawer.Navigator>
   );
