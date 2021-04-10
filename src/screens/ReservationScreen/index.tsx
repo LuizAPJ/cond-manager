@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, useColorScheme} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import api from '../../services/api';
 import themes from '../../themes';
@@ -12,10 +13,13 @@ const ReservationScreen: React.FC = () => {
   const deviceTheme = useColorScheme();
   const theme = deviceTheme ? themes[deviceTheme] : themes.dark;
 
+  const navigation = useNavigation();
+
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState<IReservationItem[]>([]);
 
   const getReservations = useCallback(async () => {
+    setList([]);
     setLoading(true);
     const {data: response} = await api.get('/reservations');
     setLoading(false);
@@ -34,7 +38,7 @@ const ReservationScreen: React.FC = () => {
   return (
     <S.Container>
       <S.Scroller showsVerticalScrollIndicator={false}>
-        <S.Button>
+        <S.Button onPress={() => navigation.navigate('MyReservationsScreen')}>
           <S.ButtonText>Minhas Reservas</S.ButtonText>
         </S.Button>
 

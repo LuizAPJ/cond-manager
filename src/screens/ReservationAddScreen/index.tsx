@@ -126,7 +126,7 @@ const ReservationAddScreen: React.FC = () => {
         );
 
         if (!response.error) {
-          navigation.navigate('ReservationMyScreen');
+          navigation.navigate('MyReservationsScreen');
         } else {
           Alert.alert('Erro!', `${response.error}`);
         }
