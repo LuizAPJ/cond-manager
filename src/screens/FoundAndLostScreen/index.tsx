@@ -43,7 +43,11 @@ const FoundAndLostScreen: React.FC = () => {
         </S.AddButton>
       ),
     });
-    getFoundAndLost();
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      getFoundAndLost();
+    });
+    return unsubscribe;
   }, [getFoundAndLost, navigation, theme]);
 
   return (
@@ -77,12 +81,17 @@ const FoundAndLostScreen: React.FC = () => {
 
         {!loading && recoveredList.length > 0 && (
           <>
-            <S.Title>Itens Perdidos</S.Title>
+            <S.Title>Itens Recuperados</S.Title>
             <S.ProductScroller
               horizontal={true}
               showsHorizontalScrollIndicator={false}>
               {recoveredList.map((item, index) => (
-                <LostItem key={index} data={item} showButton={true} />
+                <LostItem
+                  key={index}
+                  data={item}
+                  showButton={false}
+                  refreshFunction={getFoundAndLost}
+                />
               ))}
             </S.ProductScroller>
           </>
