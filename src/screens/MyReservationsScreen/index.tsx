@@ -1,7 +1,7 @@
 import React, {ElementType, useCallback, useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import {useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 import IProperty from '../../interfaces/Property';
 import IReservationItem from '../../interfaces/ReservationItem';
@@ -11,7 +11,7 @@ import api from '../../services/api';
 import S from './style';
 
 const MyReservationsScreen: React.FC = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState<IReservationItem[]>([]);
@@ -36,8 +36,12 @@ const MyReservationsScreen: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    getList();
-  }, [getList]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getList();
+    });
+
+    return unsubscribe;
+  }, [navigation, getList]);
 
   return (
     <S.Container>
