@@ -10,6 +10,9 @@ export default {
     padding: 20px;
   `,
   PhotoContainer: styled.View``,
+  PhotoItem: styled.Image`
+    height: 150px;
+  `,
   Title: styled.Text`
     font-size: 17px;
     color: ${props => props.theme.text};
@@ -25,14 +28,14 @@ export default {
     padding: 10px;
     margin-bottom: 15px;
   `,
-  SaveButton: styled.TouchableOpacity`
+  Button: styled.TouchableOpacity`
     background-color: ${props => props.theme.purple};
     padding: 12px;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
   `,
-  SaveButtonText: styled.Text`
+  ButtonText: styled.Text`
     font-size: 15px;
     font-weight: bold;
     color: ${props => props.theme.text};
