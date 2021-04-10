@@ -38,7 +38,8 @@ const FoundAndLostScreen: React.FC = () => {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <S.AddButton>
+        <S.AddButton
+          onPress={() => navigation.navigate('FoundAndLostAddScreen')}>
           <Icon name="plus" size={24} color={theme.text} />
         </S.AddButton>
       ),
