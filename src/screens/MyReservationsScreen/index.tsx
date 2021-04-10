@@ -1,18 +1,17 @@
 import React, {ElementType, useCallback, useEffect, useState} from 'react';
-import {Alert, useColorScheme} from 'react-native';
+import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import {useNavigation} from '@react-navigation/native';
 
 import IProperty from '../../interfaces/Property';
 import IReservationItem from '../../interfaces/ReservationItem';
 import MyReservationItem from '../../components/MyReservationItem';
 import api from '../../services/api';
-import themes from '../../themes';
 
 import S from './style';
 
 const MyReservationsScreen: React.FC = () => {
-  const deviceTheme = useColorScheme();
-  const theme = deviceTheme ? themes[deviceTheme] : themes.dark;
+  // const navigation = useNavigation();
 
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState<IReservationItem[]>([]);
@@ -54,7 +53,7 @@ const MyReservationsScreen: React.FC = () => {
         refreshing={loading}
         keyExtractor={(item: IReservationItem) => item.id.toString()}
         renderItem={({item}: {item: IReservationItem}) => (
-          <MyReservationItem data={item} />
+          <MyReservationItem data={item} refreshFunction={getList} />
         )}
       />
     </S.Container>
